@@ -15,10 +15,27 @@ func ImportRowLists(b []byte, split string) (lists [][]string) {
 	}
 	return
 }
+
 func ImportRowListsInt(b []byte, split string) (lists [][]int) {
 	strLists := ImportRowLists(b, split)
 	for _, list := range strLists {
 		lists = append(lists, StringSliceToIntSlice(list))
+	}
+	return
+}
+
+func ImportKeyValuesRow(b []byte, split string) (output map[string][]string) {
+	output = make(map[string][]string, 0)
+	input := string(b)
+	lines := strings.Split(input, "\n")
+	for _, line := range lines {
+		row := strings.Split(line, split)
+		key := row[0]
+		value := row[1]
+		if _, ok := output[key]; !ok {
+			output[key] = make([]string, 0)
+		}
+		output[key] = append(output[key], value)
 	}
 	return
 }
