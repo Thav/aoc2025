@@ -1,6 +1,8 @@
 go 1.22.12
 
 use (
-	./map2d
+	./convert
 	./day
+	./map2d
+	./lists
 )

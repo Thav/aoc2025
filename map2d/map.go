@@ -22,22 +22,39 @@ var (
 	Right = C{1, 0}
 )
 
-func (m *Map) getTile(x, y int) (string, error) {
+func (m *Map) GetTile(x, y int) (string, error) {
 	if x < 0 || x >= m.Width || y < 0 || y >= m.Height {
 		return "", fmt.Errorf("coordinates %d, %d are out of range for map with Width %d and Height %d", x, y, m.Width, m.Height)
 	}
 	return m.Tiles[y][x], nil
 }
 
-func (m *Map) isTile(x, y int, tileCompare string) (bool, error) {
-	tile, err := m.getTile(x, y)
+func (m *Map) GetRow(rowNumber int) (row []string, err error) {
+	if rowNumber < 0 || rowNumber >= m.Height {
+		return row, fmt.Errorf("row %d is out of range for map with Height %d", rowNumber, m.Height)
+	}
+	return m.Tiles[rowNumber], nil
+}
+
+func (m *Map) GetColumn(colNumber int) (col []string, err error) {
+	if colNumber < 0 || colNumber >= m.Width {
+		return col, fmt.Errorf("column %d is out of range for map with Width %d", colNumber, m.Width)
+	}
+	for _, row := range m.Tiles {
+		col = append(col, row[colNumber])
+	}
+	return col, nil
+}
+
+func (m *Map) IsTile(x, y int, tileCompare string) (bool, error) {
+	tile, err := m.GetTile(x, y)
 	if err != nil {
 		return false, err
 	}
 	return tile == tileCompare, nil
 }
 
-func (m *Map) setTile(x, y int, tile string) (bool, error) {
+func (m *Map) SetTile(x, y int, tile string) (bool, error) {
 	if x < 0 || x >= m.Width || y < 0 || y >= m.Height {
 		return false, fmt.Errorf("coordinates %d, %d are out of range for map with Width %d and Height %d", x, y, m.Width, m.Height)
 	}
@@ -45,8 +62,8 @@ func (m *Map) setTile(x, y int, tile string) (bool, error) {
 	return true, nil
 }
 
-func (m *Map) moveTileTo(x1, y1, x2, y2 int, empty string) (bool, error) {
-	e, err := m.getTile(x1, y1)
+func (m *Map) MoveTileTo(x1, y1, x2, y2 int, empty string) (bool, error) {
+	e, err := m.GetTile(x1, y1)
 	if err != nil {
 		return false, err
 	}
@@ -55,15 +72,15 @@ func (m *Map) moveTileTo(x1, y1, x2, y2 int, empty string) (bool, error) {
 	return true, nil
 }
 
-func (m *Map) moveTileBy(x, y, dx, dy int, empty string) (bool, error) {
-	success, err := m.moveTileTo(x, y, x+dx, y+dy, empty)
+func (m *Map) MoveTileBy(x, y, dx, dy int, empty string) (bool, error) {
+	success, err := m.MoveTileTo(x, y, x+dx, y+dy, empty)
 	if err != nil {
 		return false, err
 	}
 	return success, nil
 }
 
-func (m *Map) countTile(tile string) (count int) {
+func (m *Map) CountTile(tile string) (count int) {
 	for j := range m.Height {
 		for _, mapTile := range m.Tiles[j] {
 			if tile == mapTile {
@@ -74,7 +91,7 @@ func (m *Map) countTile(tile string) (count int) {
 	return
 }
 
-func (m *Map) findAll(tile string) (locations []C, count int) {
+func (m *Map) FindAll(tile string) (locations []C, count int) {
 	for j := range m.Height {
 		for i, mapTile := range m.Tiles[j] {
 			if tile == mapTile {

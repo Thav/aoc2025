@@ -2,11 +2,95 @@
     "version": "0.0.0",
     "configurations": [
         {
-            "name": "Launch Server",
+            "name": "Day",
             "type": "go",
             "request": "launch",
             "mode": "debug",
-            "program": "${workspaceFolder}/server.go"
+            "program": "${workspaceFolder}/day/day.go"
+        },
+        {
+            "name": "Day1",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/day1/day1.go"
+        },
+        {
+            "name": "Day2",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/day2/day2.go"
+        },
+        {
+            "name": "Day3",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/day3/day3.go"
+        },
+        {
+            "name": "Day4",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/day4/day4.go"
+        },
+        {
+            "name": "Day5",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/day5/day5.go"
+        },
+        {
+            "name": "Day6",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/day6/day6.go"
+        },
+        {
+            "name": "Day7",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/day7/day7.go"
+        },
+        {
+            "name": "Day8",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/day8/day8.go"
+        },
+        {
+            "name": "Day9",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/day9/day9.go"
+        },
+        {
+            "name": "Day10",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/day10/day10.go"
+        },
+        {
+            "name": "Day11",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/day11/day11.go"
+        },
+        {
+            "name": "Day12",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/day12/day12.go"
         }
     ]
 }
