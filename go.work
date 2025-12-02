@@ -3,6 +3,7 @@ go 1.22.12
 use (
 	./convert
 	./day
+	./day1
 	./map2d
 	./lists
 )

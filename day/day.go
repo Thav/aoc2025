@@ -4,27 +4,17 @@ package main
 import (
 	"fmt"
 	"log"
-
-	"github.com/Thav/aoc2025/map2d"
+	"os"
 )
 
-var mapString = []byte("#####\n#..@#\n#^..#\n#####")
-var directionsString = "<^<<v><v>^"
-var directionsMap = map[rune]map2d.C{
-	'<': map2d.Left,
-	'^': map2d.Up,
-	'>': map2d.Right,
-	'v': map2d.Down,
-}
-
 func main() {
-	levelMap := map2d.ImportMap(mapString)
-	tile, err := levelMap.GetTile(3, 1)
+	example, err := os.ReadFile("example.txt")
 	if err != nil {
-		log.Fatalln("getTile failed", err)
+		log.Fatalln("Couldn't read example.txt")
 	}
-	if tile != "@" {
-		log.Fatalf("Expected %v to be @\n", tile)
+	input, err := os.ReadFile("input.txt")
+	if err != nil {
+		log.Fatalln("Couldn't read input.txt")
 	}
-	fmt.Println(levelMap)
+	fmt.Println(string(example[0:10]), string(input[0:10]))
 }
