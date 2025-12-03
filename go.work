@@ -4,6 +4,7 @@ use (
 	./convert
 	./day
 	./day1
+	./day2
 	./map2d
 	./lists
 )
