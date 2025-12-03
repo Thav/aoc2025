@@ -81,14 +81,6 @@ func part2logic(from, to string) (sum int) {
 	return
 }
 
-func toFloat(s string) float64 {
-	value, err := strconv.ParseFloat(s, 64)
-	if err != nil {
-		log.Fatalln("couldn't convert to float: ", s)
-	}
-	return value
-}
-
 func toInt(s string) int {
 	value, err := strconv.Atoi(s)
 	if err != nil {
@@ -96,24 +88,6 @@ func toInt(s string) int {
 	}
 	return value
 }
-
-func doesRangeHaveEvenDigitCount(r []string) bool {
-	lenFrom := len(r[0])
-	lenTo := len(r[1])
-	if lenFrom%2 == 0 {
-		return true
-	}
-	if lenFrom-lenTo > 0 {
-		return true
-	}
-	return false
-}
 func inRange(value, from, to int) bool {
 	return value >= from && value <= to
-}
-func doesRangeHaveEvenDigitCount1(r []int) bool {
-	return false
-}
-func doesRangeHaveEvenDigitCount2(r []int) bool {
-	return false
 }
