@@ -5,6 +5,7 @@ use (
 	./day
 	./day1
 	./day2
+	./day3
 	./map2d
 	./lists
 )

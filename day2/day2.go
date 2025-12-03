@@ -20,7 +20,7 @@ func main() {
 		log.Fatalln("Couldn't read puzzle.txt")
 	}
 	fmt.Println(string(example[0:10]), "\n", string(puzzle[0:10]))
-	input := puzzle
+	input := example
 	rangesRaw := strings.Split(string(input), ",")
 	rangesInt := make([][]int, 0)
 	rangesString := make([][]string, 0)
