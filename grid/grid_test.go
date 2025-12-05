@@ -1,4 +1,4 @@
-package map2d
+package grid
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ import (
 // #..@#
 // #^..#
 // #####
-var mapString = []byte("#####\n#..@#\n#^..#\n#####")
+var gridString = []byte("#####\n#..@#\n#^..#\n#####")
 var directionsString = "<^<<v><v>^"
 var directionsMap = map[rune]C{
 	'<': Left,
@@ -19,19 +19,19 @@ var directionsMap = map[rune]C{
 	'>': Right,
 	'v': Down,
 }
-var levelMap Map
+var levelGrid Grid
 
 func TestMain(m *testing.M) {
-	levelMap = ImportMap(mapString)
+	levelGrid = ImportGrid(gridString)
 	exitVal := m.Run()
 	log.Println("Do stuff AFTER the tests!")
 
 	os.Exit(exitVal)
 }
 
-func TestImportMap(t *testing.T) {
-	levelMap := ImportMap(mapString)
-	tile, err := levelMap.GetTile(3, 1)
+func TestImportGrid(t *testing.T) {
+	levelGrid := ImportGrid(gridString)
+	tile, err := levelGrid.GetTile(3, 1)
 	if err != nil {
 		t.Error("getTile failed", err)
 		return
@@ -40,11 +40,11 @@ func TestImportMap(t *testing.T) {
 		t.Errorf("Expected %v to be @", tile)
 		return
 	}
-	fmt.Println(levelMap)
+	fmt.Println(levelGrid)
 }
 
 func TestGetColumn(t *testing.T) {
-	col, err := levelMap.GetColumn(3)
+	col, err := levelGrid.GetColumn(3)
 	if err != nil {
 		t.Error("GetColumn failed", err)
 		return
@@ -60,11 +60,11 @@ func TestGetColumn(t *testing.T) {
 		}
 	}
 	fmt.Println(col)
-	col, err = levelMap.GetColumn(-1)
+	col, err = levelGrid.GetColumn(-1)
 	if err == nil {
 		t.Error("Expected error when indexing column -1")
 	}
-	col, err = levelMap.GetColumn(5)
+	col, err = levelGrid.GetColumn(5)
 	if err == nil {
 		t.Error("Expected error when indexing column 5")
 	}

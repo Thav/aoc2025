@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strings"
 
 	"github.com/Thav/aoc2025/lists"
 )
@@ -21,12 +20,12 @@ func main() {
 	}
 	fmt.Println(string(example[0:10]))
 	fmt.Println(string(puzzle[0:10]))
-	input := example
+	input := puzzle
 	banks := lists.ImportRowListsInt(input, "")
 	joltage1 := 0
 	joltage2 := 0
-	var b strings.Builder
-	for i, bank := range banks {
+	// var b strings.Builder
+	for _, bank := range banks {
 		indices := make(map[int][]int, 0)
 		for i, jattery := range bank {
 			if jattIndices, ok := indices[jattery]; ok {
@@ -37,13 +36,13 @@ func main() {
 		}
 		j1 := part1logic(bank, indices)
 		j2 := part2logic(bank, indices)
-		b.WriteString(fmt.Sprintf("%d: %v \n %d\n", i, bank, j2))
+		// b.WriteString(fmt.Sprintf("%d: %v \n %d\n", i, bank, j2))
 		joltage1 += j1
 		joltage2 += j2
 	}
 	fmt.Println("Part 1: ", joltage1)
 	fmt.Println("Part 2: ", joltage2)
-	os.WriteFile("output.txt", []byte(b.String()), 0666)
+	// os.WriteFile("output.txt", []byte(b.String()), 0666)
 
 }
 
@@ -89,16 +88,20 @@ DigitLoop:
 				jattIndices = jattIndices[1:]
 				// Remove leading index when past the last digit added
 			}
-			if len(jattIndices) > 0 && jattIndices[0] > (len(bank)-1-(12-i)) {
+			atMost := len(bank) - 11 + i
+			if len(jattIndices) > 0 && jattIndices[0] >= atMost {
 				continue
 				// Remaining locations of this digit can't be next, but might work later
 			}
 			// now we have a good digit
-			sum = sum*10 + j
-			i++
-			indices[j] = jattIndices[1:]
-			jattIndices, ok = indices[j]
-			continue DigitLoop
+			if len(jattIndices) > 0 {
+				sum = sum*10 + j
+				i++
+				lastIndex = jattIndices[0]
+				indices[j] = jattIndices[1:]
+				jattIndices, ok = indices[j]
+				continue DigitLoop
+			}
 		}
 	}
 	return

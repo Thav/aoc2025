@@ -6,6 +6,6 @@ use (
 	./day1
 	./day2
 	./day3
-	./map2d
+	./grid
 	./lists
 )
