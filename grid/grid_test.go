@@ -41,6 +41,36 @@ func TestImportGrid(t *testing.T) {
 		return
 	}
 	fmt.Println(levelGrid)
+
+}
+func TestCopy(t *testing.T) {
+	newGrid := levelGrid.Copy()
+	if newGrid.Height != levelGrid.Height ||
+		newGrid.Width != levelGrid.Width ||
+		len(newGrid.Tiles) != len(levelGrid.Tiles) ||
+		len(newGrid.Tiles[0]) != len(levelGrid.Tiles[0]) {
+		t.Error("Copy failed to give matching height and width", newGrid, levelGrid)
+		return
+	}
+	newCol, err := newGrid.GetColumn(3)
+	if err != nil {
+		t.Error("Couldn't get expected column from newGrid", newGrid)
+		return
+	}
+	levelCol, err := levelGrid.GetColumn(3)
+	if err != nil {
+		t.Error("Couldn't get expected column from levelGrid", levelGrid)
+		return
+	}
+	if newCol[1] != levelCol[1] {
+		t.Error("Grids ended up with different values", newGrid, levelGrid)
+	}
+	if &newGrid.Tiles == &levelGrid.Tiles ||
+		&newGrid.Tiles[0] == &levelGrid.Tiles[0] {
+		t.Error("Somehow copied slice directly", &newGrid.Tiles, &levelGrid.Tiles, &newGrid.Tiles[0], &levelGrid.Tiles[0])
+		return
+	}
+	fmt.Println(newGrid)
 }
 
 func TestGetColumn(t *testing.T) {
@@ -74,6 +104,23 @@ func TestGetColumn(t *testing.T) {
 	// }
 }
 
+func TestSetTile(t *testing.T) {
+	grid := levelGrid.Copy()
+	a, err := grid.GetTile(3, 1)
+	if err != nil || a != "@" {
+		t.Error("failed on the GetTile", grid.Tiles)
+	}
+	success, err := grid.SetTile(3, 1, "U")
+	if !success {
+		t.Error("failed on SetTile", grid)
+	} else {
+		b, err := grid.GetTile(3, 1)
+		if err != nil || b != "U" {
+			t.Error("SetTile is said to have succeeded but didn't", grid)
+		}
+	}
+	fmt.Println(grid)
+}
 func TestOthers(t *testing.T) {
 	fmt.Println("Hello, World!")
 	directionsImport, err := ImportDirections(directionsString, directionsMap)

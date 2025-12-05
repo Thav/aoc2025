@@ -58,7 +58,7 @@ func (m *Grid) SetTile(x, y int, tile string) (bool, error) {
 	if x < 0 || x >= m.Width || y < 0 || y >= m.Height {
 		return false, fmt.Errorf("coordinates %d, %d are out of range for grid with Width %d and Height %d", x, y, m.Width, m.Height)
 	}
-	m.Tiles[x][y] = tile
+	m.Tiles[y][x] = tile
 	return true, nil
 }
 
@@ -126,6 +126,17 @@ func ImportGrid(b []byte) (m Grid) {
 	m.Tiles = append(m.Tiles, tilesRow)
 	m.Height++
 	return m
+}
+
+func (m Grid) Copy() (newGrid Grid) {
+	newGrid.Height = m.Height
+	newGrid.Width = m.Width
+	for _, col := range m.Tiles {
+		newCol := make([]string, len(col))
+		copy(newCol, col)
+		newGrid.Tiles = append(newGrid.Tiles, newCol)
+	}
+	return
 }
 
 func (m Grid) String() string {
