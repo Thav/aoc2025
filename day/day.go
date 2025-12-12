@@ -13,11 +13,11 @@ func main() {
 	if err != nil {
 		log.Fatalln("Couldn't read example.txt")
 	}
-	input, err := os.ReadFile("input.txt")
+	puzzle, err := os.ReadFile("puzzle.txt")
 	if err != nil {
-		log.Fatalln("Couldn't read input.txt")
+		log.Fatalln("Couldn't read puzzle.txt")
 	}
-	fmt.Println(string(example[0:10]), string(input[0:10]))
+	fmt.Println(string(example[0:10]), string(puzzle[0:10]))
 
 	filename := "example.txt"
 	f, err := os.Open(filename)
@@ -30,7 +30,7 @@ func main() {
 		input = append(input, scanner.Text())
 	}
 
-	fmt.Println(string(input[0:10]))
+	fmt.Println(string(input[0]))
 
 	part1logic()
 	part2logic()

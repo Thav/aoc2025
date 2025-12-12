@@ -121,12 +121,18 @@ func TestSetTile(t *testing.T) {
 	}
 	fmt.Println(grid)
 }
-func TestOthers(t *testing.T) {
-	fmt.Println("Hello, World!")
-	directionsImport, err := ImportDirections(directionsString, directionsMap)
-	if err != nil {
-		panic(err)
+func TestFindAll(t *testing.T) {
+	coords, n := levelGrid.FindAll("@")
+	if n != 1 {
+		t.Fatal("Should have found 1 @, got", n)
 	}
-	fmt.Println(directionsImport)
-
+	x := coords[0].x
+	y := coords[0].y
+	if x != 3 || y != 1 {
+		t.Fatalf("Wrong coordinates returns, expected (3,1), got (%d,%d)", x, y)
+	}
+	coords, n = levelGrid.FindAll("#")
+	if n != 14 {
+		t.Fatal("Should have found 14 #, got", n)
+	}
 }

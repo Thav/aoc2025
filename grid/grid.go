@@ -12,7 +12,7 @@ type Grid struct {
 }
 
 type C struct { // Coordinates
-	x, y int
+	X, Y int
 }
 
 var (
