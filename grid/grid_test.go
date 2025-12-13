@@ -126,8 +126,8 @@ func TestFindAll(t *testing.T) {
 	if n != 1 {
 		t.Fatal("Should have found 1 @, got", n)
 	}
-	x := coords[0].x
-	y := coords[0].y
+	x := coords[0].X
+	y := coords[0].Y
 	if x != 3 || y != 1 {
 		t.Fatalf("Wrong coordinates returns, expected (3,1), got (%d,%d)", x, y)
 	}
