@@ -24,3 +24,11 @@ func ToInt(s string) int {
 	}
 	return value
 }
+
+func SliceToInt(strings []string) []int {
+	ints := make([]int, len(strings))
+	for i, s := range strings {
+		ints[i] = ToInt(s)
+	}
+	return ints
+}

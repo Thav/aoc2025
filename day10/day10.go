@@ -6,41 +6,83 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
+
+	"github.com/Thav/aoc2025/convert"
+	"gonum.org/v1/gonum/stat/combin"
 )
 
-func main() {
-	example, err := os.ReadFile("example.txt")
-	if err != nil {
-		log.Fatalln("Couldn't read example.txt")
-	}
-	puzzle, err := os.ReadFile("puzzle.txt")
-	if err != nil {
-		log.Fatalln("Couldn't read puzzle.txt")
-	}
-	fmt.Println(string(example[0:10]), string(puzzle[0:10]))
+type factoryMachine struct {
+	lights   []int
+	buttons  [][]int
+	joltages []int
+}
 
+func pressesToState(presses []int) []int {
+	state := make([]int, len(presses))
+	for i, p := range presses {
+		state[i] = p % 2
+	}
+	return state
+}
+
+func main() {
 	filename := "example.txt"
 	f, err := os.Open(filename)
 	if err != nil {
 		log.Fatalln("Couldn't read ", filename)
 	}
-	var input []string
+	var machines []factoryMachine
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
-		input = append(input, scanner.Text())
+		split := strings.Split(scanner.Text(), " ")
+		fmt.Println(split)
+		lightsString := split[0]
+		buttonsStrings := split[1 : len(split)-2]
+		joltageString := split[len(split)-1]
+		if lightsString[0] != '[' || joltageString[0] != '{' {
+			log.Fatalln("Malformed input,", lightsString, joltageString)
+		}
+		lights := make([]int, len(lightsString)-2)
+		for i, l := range lightsString[1 : len(lightsString)-1] {
+			if l == '#' {
+				lights[i] = 1
+			}
+		}
+		joltages := convert.SliceToInt(strings.Split(joltageString[1:len(joltageString)-1], ","))
+		buttons := make([][]int, len(buttonsStrings))
+		for i, buttonsString := range buttonsStrings {
+			if buttonsString[0] != '(' {
+				log.Fatalln("Malformed input,", buttonsString)
+			}
+			buttons[i] = make([]int, len(lights))
+			buttonPositions := convert.SliceToInt(strings.Split(buttonsString[1:len(buttonsString)-1], ","))
+			for _, b := range buttonPositions {
+				buttons[i][b] = 1
+			}
+		}
+		machines = append(machines, factoryMachine{lights, buttons, joltages})
 	}
 
-	fmt.Println(string(input[0]))
+	fmt.Println(machines[0])
 
-	part1logic()
+	pressesOn := part1logic(machines)
 	part2logic()
 
-	fmt.Println("Part 1: ", "")
+	fmt.Println("Part 1: ", pressesOn)
 	fmt.Println("Part 2: ", "")
 
 }
 
-func part1logic() {
+func part1logic(machines []factoryMachine) (pressesOn int) {
+	for _, machine := range machines {
+		n := len(machine.buttons)
+		gen := combin.NewCombinationGenerator(n, n)
+		fewest := n
+		for gen.Next() {
+			comb := gen.Combination()
+		}
+	}
 	return
 }
 
